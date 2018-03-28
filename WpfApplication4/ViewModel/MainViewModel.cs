@@ -5,59 +5,68 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WpfApplication4.Annotations;
 using WpfApplication4.Command;
 using WpfApplication4.Model;
+using WpfApplication4.ViewModel.Base;
 
 namespace WpfApplication4.ViewModel
 {
-	class MainViewModel:BaseViewModel
+	class MainViewModel:AViewModel
 
 	{
+		private MainCommand _CommandBtn;
+		public MainCommand CommandBtn
+		{
+			get
+			{
+				return _CommandBtn ?? (_CommandBtn = new MainCommand(obj =>
+				{
+	
+				}, (obj) =>
+				{
+					return true;
+				}));
+			}
+		}
 		private IEnumerable<Drink> drinks;
 		public MainViewModel()
 		{
-			drinks = new DrinkService().GetDrinks();
+			//drinks = new DrinkService().GetDrinks();
 		}
 
-
-
-
-		private BaseViewModel viewModel;
-		public BaseViewModel ViewModel
+		private void OnSelectViewCommand(string obj)
 		{
-			get
+			switch (obj)
 			{
-				return viewModel;
-			}
-			set
-			{
-				viewModel = value;
-				OnPropertyChanged("ViewModel");
-			}
-		}
-		public ICommand DisplayPersonView
-		{
-			get
-			{
-				return new MainCommand(action => ViewModel = new ViewModelB());
+				case "ExitCommand":
+					Application.Current.Shutdown();
+					break;
+				default:
+					Current_ViewModel = this.GetViewModel(obj);
+					break;
 			}
 		}
 
-		public IEnumerable<Drink> Drinks
-		{
-			get
-			{
-				return drinks;
-			}
 
-			set
-			{
-				drinks = value;
-				OnPropertyChanged("Drinks");
-			}
-		}
+
+
+
+		//public IEnumerable<Drink> Drinks
+		//{
+		//	get
+		//	{
+		//		return drinks;
+		//	}
+
+		//	set
+		//	{
+		//		drinks = value;
+		//		OnPropertyChanged("Drinks");
+		//	}
+		//}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

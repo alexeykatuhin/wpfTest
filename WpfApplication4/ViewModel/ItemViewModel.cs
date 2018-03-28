@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApplication4.ViewModel.Base;
 
 namespace WpfApplication4.ViewModel
 {
-	class ViewModelB:BaseViewModel
+	public class ItemViewModel: AViewModel
 	{
 	}
 }

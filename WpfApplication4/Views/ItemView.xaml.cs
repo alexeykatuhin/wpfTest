@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace WpfApplication4.Views
 {
 	/// <summary>
-	/// Логика взаимодействия для FirstView.xaml
+	/// Логика взаимодействия для ItemView.xaml
 	/// </summary>
-	public partial class FirstView : UserControl
+	public partial class ItemView : UserControl
 	{
-		public FirstView()
+		public ItemView()
 		{
 			InitializeComponent();
 		}

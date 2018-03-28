@@ -9,7 +9,7 @@ using WpfApplication4.Annotations;
 
 namespace WpfApplication4.Model
 {
-	class Drink:IDrink, INotifyPropertyChanged
+	public class Drink:IDrink, INotifyPropertyChanged
 	{
 		private int _id;
 		private string _name;

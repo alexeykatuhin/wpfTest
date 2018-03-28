@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApplication4.Model
 {
-	enum TypeOfDrink
+	public enum TypeOfDrink
 	{
 		Alcohol =0,
 		NonAlcohol=1
