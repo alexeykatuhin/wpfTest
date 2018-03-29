@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApplication4.Model
 {
-	interface IDrinkService
+	public interface IDrinkService
 	{
 		IEnumerable<Drink> GetDrinks();
 		void UpdateDrink(Drink drink);

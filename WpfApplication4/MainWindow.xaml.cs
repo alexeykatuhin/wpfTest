@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApplication4.Classes;
+using WpfApplication4.Model;
 using WpfApplication4.ViewModel;
 
 namespace WpfApplication4
@@ -21,11 +23,14 @@ namespace WpfApplication4
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public MainWindow()
+		public MainWindow(IDrinkService service)
 		{
 			InitializeComponent();
 
-
+			Service.DrinkService = service;
+			DataContext = new Base_ViewModel();
 		}
+
+
 	}
 }

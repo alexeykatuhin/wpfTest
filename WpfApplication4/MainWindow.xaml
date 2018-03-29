@@ -9,9 +9,9 @@
         xmlns:costconvert="clr-namespace:WpfApplication4.Classes"
         mc:Ignorable="d"
         Title="MainWindow" Height="350"  Width="400">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <viewModel:Base_ViewModel></viewModel:Base_ViewModel>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
             <view:MainView></view:MainView>

@@ -90,6 +90,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\CostConverter.cs" />
+    <Compile Include="Classes\Service.cs" />
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="Command\MainCommand.cs" />
     <Compile Include="Command\RelayCommand.cs" />

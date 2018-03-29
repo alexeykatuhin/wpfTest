@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WpfApplication4"
              xmlns:ViewModels="clr-namespace:WpfApplication4.ViewModel"
-             StartupUri="MainWindow.xaml">
+             >
     <Application.Resources>
 
     </Application.Resources>

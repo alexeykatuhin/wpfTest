@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using WpfApplication4.Classes;
 using WpfApplication4.Command;
 using WpfApplication4.Model;
 
@@ -9,10 +10,6 @@ namespace WpfApplication4.ViewModel.Base
 {
 	public abstract class AViewModel : ViewModelBase
 	{
-	
-		public string Name { get; set; }
-		public RelayCommand<string> SelectViewCommand { get; set; }
-		public RelayCommand<int> SelectItemCommand { get; set; }
 		private IEnumerable<Drink> drinks;
 
 		public IEnumerable<Drink> Drinks
@@ -28,9 +25,14 @@ namespace WpfApplication4.ViewModel.Base
 				OnPropertyChanged("Drinks");
 			}
 		}
+		public string Name { get; set; }
+		public RelayCommand<string> SelectViewCommand { get; set; }
+		public RelayCommand<int> SelectItemCommand { get; set; }
+
 		public AViewModel()
 		{
-			drinks = new DrinkService().GetDrinks();
+			drinks = Service.DrinkService.GetDrinks();
+
 			SelectItemCommand = new RelayCommand<int>(OnSelectViewCommandMulti);
 			SelectViewCommand = new RelayCommand<string>(OnSelectViewCommand);
 		}

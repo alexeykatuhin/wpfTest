@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WpfApplication4.Command;
+using WpfApplication4.Model;
 
 namespace WpfApplication4.ViewModel.Base
 {
@@ -28,13 +29,23 @@ namespace WpfApplication4.ViewModel.Base
 
 		#region Constructor
 
+
 		/// <summary>
 		/// Initializes a new instance of the ViewModelBase class.
 		/// </summary>
+		public ViewModelBase(IDrinkService drinkService)
+		{
+			InitializeCommands();
+			Repo = drinkService;
+
+		}
 		public ViewModelBase()
 		{
 			InitializeCommands();
+			
+
 		}
+		public IDrinkService Repo { get; }
 
 		#endregion Constructor
 
