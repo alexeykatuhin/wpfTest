@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using WpfApplication4.Command;
 using WpfApplication4.Model;
 using WpfApplication4.ViewModel.Base;
@@ -51,7 +52,8 @@ namespace WpfApplication4.ViewModel
 				return _PayCommand ?? (_PayCommand = new MainCommand(obj =>
 				{
 					Drink.Quantity -= SelectedItem;
-					Repo.UpdateDrink(Drink);	
+					Repo.UpdateDrink(Drink);
+					(obj as RelayCommand<string>).Execute(null);	
 				}, (obj) =>
 				{
 					

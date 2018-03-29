@@ -31,7 +31,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Назад" Margin="10" Width="70" Height="20" Command="{Binding DataContext.SelectViewCommand, ElementName=Base_V}"></Button>
-            <Button Content="Оплатить" Margin="10" Width="70" Height="20" Command="{Binding PayCommand}" ></Button>
+            <Button Content="Оплатить" Margin="10" Width="70" Height="20" Command="{Binding PayCommand}" CommandParameter="{Binding DataContext.SelectViewCommand, ElementName=Base_V}"></Button>
         </StackPanel>
     </StackPanel>
 </UserControl>

@@ -4,8 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media.Effects;
 using System.Xml;
 using System.Xml.Linq;
+using WpfApplication4.ServiceReference1;
 
 namespace WpfApplication4.Model
 {
@@ -56,20 +59,54 @@ namespace WpfApplication4.Model
 
 		public void UpdateDrink(Drink drink)
 		{
-			XmlDocument xDoc = new XmlDocument();
+			//XmlDocument xDoc = new XmlDocument();
 
-			xDoc.Load(filepath);
-			XmlElement xRoot = xDoc.DocumentElement;
+			//xDoc.Load(filepath);
+			//XmlElement xRoot = xDoc.DocumentElement;
 
 
-			foreach (XmlElement xnode in xRoot)
+			//foreach (XmlElement xnode in xRoot)
+			//{
+			//	if (int.Parse(xnode.ChildNodes.Item(0).InnerText) == drink.Id)
+			//	{
+					
+			//		xnode.ChildNodes.Item(0).InnerText = drink.Quantity.ToString();
+			//		break;
+			//	}
+			//}
+
+			//xDoc.Save(filepath);
+
+			/////////////
+			XDocument doc = XDocument.Load(filepath);
+			XNode node = doc.Root.FirstNode;
+			while (node!=null)
 			{
-				if (int.Parse(xnode.ChildNodes.Item(0).InnerText) == drink.Id)
+				XElement x = (XElement) node;
+				XElement xx = (XElement) x.FirstNode;
+				if (xx.Value == drink.Id.ToString())
 				{
-					xnode.ChildNodes.Item(0).InnerText = drink.Quantity.ToString();
-					return;
+					XElement xxx =  ((XElement)x.LastNode);
+					xxx.Value = drink.Quantity.ToString();
+					break;
 				}
+				node = node.NextNode;
+
 			}
+			doc.Save(filepath);
+			//////////////
+
+
+
+
+			if (drink.Quantity == 0)
+			{
+				Service1Client client = new Service1Client("BasicHttpBinding_IService1");
+					int resp = client.CheckData(drink.Id);
+				MessageBox.Show("Был произведен запрос к службе. Ответ: " + resp);
+
+			}
+
 		}
 	}
 }
