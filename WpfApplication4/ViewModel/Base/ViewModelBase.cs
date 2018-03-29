@@ -42,7 +42,6 @@ namespace WpfApplication4.ViewModel.Base
 		public ViewModelBase()
 		{
 			InitializeCommands();
-			
 
 		}
 		public IDrinkService Repo { get; }
@@ -600,7 +599,7 @@ namespace WpfApplication4.ViewModel.Base
 		/// <summary>
 		/// Raised when a property on this object has a new value.
 		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged;
+		public virtual event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>
 		/// Raises this object's PropertyChanged event for one property and all its dependent

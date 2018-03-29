@@ -4,9 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication4.Views"
+             xmlns:costconvert="clr-namespace:WpfApplication4.Classes"
         mc:Ignorable="d"
        Height="350" Width="400">
-    <Grid>
-        <Label Content="PRIVET!!!"></Label>
-    </Grid>
+    <UserControl.Resources>
+        <costconvert:CostConverterInt x:Key="CostConverter"></costconvert:CostConverterInt>
+        
+    </UserControl.Resources>
+    <StackPanel Orientation="Vertical">
+        <Label HorizontalAlignment="Center" FontSize="20" Content="{Binding Path=Drink.Name}"></Label>
+        <Label HorizontalAlignment="Center" FontSize="18" Content="{Binding Path=Drink.Description}"></Label>
+        <Label HorizontalAlignment="Center" FontSize="16" Content="{Binding Path=Drink.Type}"></Label>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label Content="Выберите количество напитков"></Label>
+            <ComboBox ItemsSource="{Binding Path=QuantityList}" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" ></ComboBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Height="30" Width="30" Content="1" Background="Blue" Margin="5" Command="{Binding SetMoney}" CommandParameter="1"></Button>
+            <Button Height="30" Width="30" Content="2" Background="Blue" Margin="5" Command="{Binding SetMoney}" CommandParameter="2"></Button>
+            <Button Height="30" Width="30" Content="5" Background="Blue" Margin="5" Command="{Binding SetMoney}" CommandParameter="5"></Button>
+            <Button Height="30" Width="30" Content="10" Background="Blue" Margin="5" Command="{Binding SetMoney}" CommandParameter="10"></Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label Content="Внесено:"></Label>
+            <Label Content="{Binding Sum, Converter={StaticResource CostConverter}, UpdateSourceTrigger=PropertyChanged}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Назад" Margin="10" Width="70" Height="20" Command="{Binding DataContext.SelectViewCommand, ElementName=Base_V}"></Button>
+            <Button Content="Оплатить" Margin="10" Width="70" Height="20" Command="{Binding PayCommand}" ></Button>
+        </StackPanel>
+    </StackPanel>
 </UserControl>

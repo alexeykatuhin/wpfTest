@@ -14,10 +14,10 @@ namespace WpfApplication4.ViewModel
 	public   class Base_ViewModel : AViewModel
 	{
 
-		public Base_ViewModel()
+		public Base_ViewModel(IDrinkService serv):base(serv)
 		{
-			this.AddViewModel(new MainViewModel() { DisplayName = "Main", InternalName = "MainViewModel" });
-			this.AddViewModel(new ItemViewModel() { DisplayName = "Item", InternalName = "ItemViewModel" });
+			this.AddViewModel(new MainViewModel(serv) { DisplayName = "Main", InternalName = "MainViewModel" });
+			this.AddViewModel(new ItemViewModel(serv) { DisplayName = "Item", InternalName = "ItemViewModel" });
 
 			this.Current_ViewModel = this.GetViewModel("MainViewModel");
 		}

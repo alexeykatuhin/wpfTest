@@ -32,11 +32,11 @@ namespace WpfApplication4.ViewModel
 			}
 		}
 		private IEnumerable<Drink> drinks;
-		public MainViewModel()
-		{
-			//drinks = new DrinkService().GetDrinks();
-		}
 
+		public MainViewModel(IDrinkService serv) :base(serv)
+		{
+	
+		}
 		private void OnSelectViewCommand(string obj)
 		{
 			switch (obj)

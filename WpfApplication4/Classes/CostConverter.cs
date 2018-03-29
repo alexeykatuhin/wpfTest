@@ -24,4 +24,22 @@ namespace WpfApplication4.Classes
 			return value;
 		}
 	}
+
+	[ValueConversion(typeof(int), typeof(string))]
+	class CostConverterInt : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter,
+		   System.Globalization.CultureInfo culture)
+		{
+			// Возвращаем строку в формате 123.456.789 руб.
+			return ((int)value) + " руб.";
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter,
+			System.Globalization.CultureInfo culture)
+		{
+
+			return value;
+		}
+	}
 }

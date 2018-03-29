@@ -23,14 +23,21 @@ namespace WpfApplication4
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public MainWindow(IDrinkService service)
+		//public MainWindow(IDrinkService service)
+		//{
+		//	InitializeComponent();
+
+		//	Service.DrinkService = service;
+		//	DataContext = new Base_ViewModel();
+		//}
+
+		public MainWindow()
 		{
 			InitializeComponent();
 
-			Service.DrinkService = service;
-			DataContext = new Base_ViewModel();
+			//Service.DrinkService = service;
+			//DataContext = new Base_ViewModel();
 		}
-
 
 	}
 }

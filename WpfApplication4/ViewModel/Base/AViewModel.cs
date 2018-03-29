@@ -29,14 +29,15 @@ namespace WpfApplication4.ViewModel.Base
 		public RelayCommand<string> SelectViewCommand { get; set; }
 		public RelayCommand<int> SelectItemCommand { get; set; }
 
-		public AViewModel()
+		private IDrinkService serv;
+		public AViewModel(IDrinkService serv):base(serv)
 		{
-			drinks = Service.DrinkService.GetDrinks();
-
+			this.serv = serv;
+			//drinks = Service.DrinkService.GetDrinks();
+			Drinks = Repo.GetDrinks();
 			SelectItemCommand = new RelayCommand<int>(OnSelectViewCommandMulti);
 			SelectViewCommand = new RelayCommand<string>(OnSelectViewCommand);
 		}
-
 		private static ObservableCollection<ViewModelBase> _ViewModels;
 		public static ObservableCollection<ViewModelBase> ViewModels
 		{
@@ -61,20 +62,22 @@ namespace WpfApplication4.ViewModel.Base
 
 		private void OnSelectViewCommand(string obj)
 		{
-			switch (obj)
-			{
-				case "ExitCommand":
-					Application.Current.Shutdown();
-					break;
-				default:
-					Current_ViewModel = this.GetViewModel(obj);
-					break;
-			}
+			var viewmodel = this.GetViewModel("MainViewModel");
+			Current_ViewModel = viewmodel;
+			//switch (obj)
+			//{
+			//	case "ExitCommand":
+			//		Application.Current.Shutdown();
+			//		break;
+			//	default:
+			//		Current_ViewModel = this.GetViewModel(obj);
+			//		break;
+			//}
 		}
 		private void OnSelectViewCommandMulti(int obj)
 		{
-			Id = obj;
 			Current_ViewModel = this.GetViewModel("ItemViewModel");
+			(Current_ViewModel as ItemViewModel).Drink = Drinks.First(x=>x.Id == obj);
 		}
 
 		private ViewModelBase _Current_ViewModel;
@@ -84,19 +87,6 @@ namespace WpfApplication4.ViewModel.Base
 			set { _Current_ViewModel = value; OnPropertyChanged("Current_ViewModel"); }
 		}
 
-		public int Id
-		{
-			get
-			{
-				return id;
-			}
 
-			set
-			{
-				id = value; OnPropertyChanged("Id");
-			}
-		}
-
-		private int id;
 	}
 }

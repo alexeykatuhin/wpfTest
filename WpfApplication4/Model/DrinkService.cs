@@ -5,18 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace WpfApplication4.Model
 {
 	class DrinkService:IDrinkService
 	{
+
+		string filepath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName + "\\data.xml";
+
 		public IEnumerable<Drink> GetDrinks()
 		{
+
+			
+
 			List<Drink> drinks = new List<Drink>();
 
 			XmlDocument xDoc = new XmlDocument();
-			
-			xDoc.Load(@"C:\Users\kav\Documents\Visual Studio 2015\Projects\WpfApplication4\WpfApplication4\data.xml");
+			xDoc.Load(filepath);
+			//xDoc.Load(@"C:\Users\kav\Documents\Visual Studio 2015\Projects\WpfApplication4\WpfApplication4\data.xml");
 			XmlElement xRoot = xDoc.DocumentElement;
 			foreach (XmlElement xnode in xRoot)
 			{
@@ -51,13 +58,15 @@ namespace WpfApplication4.Model
 		{
 			XmlDocument xDoc = new XmlDocument();
 
-			xDoc.Load("data.xml");
+			xDoc.Load(filepath);
 			XmlElement xRoot = xDoc.DocumentElement;
+
+
 			foreach (XmlElement xnode in xRoot)
 			{
-				if (int.Parse(xnode.Attributes.GetNamedItem("id").Value) == drink.Id)
+				if (int.Parse(xnode.ChildNodes.Item(0).InnerText) == drink.Id)
 				{
-					xnode.Attributes.GetNamedItem("quantity").Value = drink.Quantity.ToString();
+					xnode.ChildNodes.Item(0).InnerText = drink.Quantity.ToString();
 					return;
 				}
 			}

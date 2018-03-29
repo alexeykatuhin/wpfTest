@@ -22,7 +22,9 @@ namespace WpfApplication4
 			base.OnStartup(e);
 			IUnityContainer container = new UnityContainer();
 			container.RegisterType<IDrinkService, DrinkService>();
-			container.Resolve<MainWindow>().Show();
+			var dataContext = container.Resolve<Base_ViewModel>();
+			var window = new MainWindow() {DataContext = dataContext};
+			window.Show();
 
 		}
 	}
