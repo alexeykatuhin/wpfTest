@@ -43,7 +43,7 @@ namespace WpfApplication4.Model
 					Quantity = int.Parse(xnode.ChildNodes.Item(5).InnerText)
 				};
 
-				//Drink drink = new Drink()
+				//SelectedDrink drink = new SelectedDrink()
 				//{
 				//	Id = int.Parse(xnode.Attributes.GetNamedItem("id").Value),
 				//	Name = xnode.Attributes.GetNamedItem("name").Value,

@@ -26,7 +26,7 @@ namespace WpfApplication4.Command
 			: this(execute, null)
 		{
 		}
-
+	
 		/// <summary>
 		/// Creates a new command.
 		/// </summary>
@@ -40,6 +40,8 @@ namespace WpfApplication4.Command
 			_execute = execute;
 			_canExecute = canExecute;
 		}
+
+		
 
 		#endregion
 

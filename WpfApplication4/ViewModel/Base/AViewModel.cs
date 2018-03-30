@@ -1,15 +1,63 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using WpfApplication4.Annotations;
 using WpfApplication4.Classes;
 using WpfApplication4.Command;
 using WpfApplication4.Model;
 
 namespace WpfApplication4.ViewModel.Base
 {
-	public abstract class AViewModel : ViewModelBase
+	public abstract class AViewModel : INotifyPropertyChanged
 	{
+		public AViewModel(IDrinkService serv)
+		{
+			Repo = serv;
+			Drinks = Repo.GetDrinks();
+			SelectViewCommand = new RelayCommand<int?>(OnSelectViewCommand, CanExecute);
+		}
+
+		#region Commands
+
+		
+
+		public RelayCommand<int?> SelectViewCommand { get; set; }
+		private bool CanExecute(int? i)
+		{
+			if (i == null)
+				return true;
+			if (Drinks.First(x => x.Id == i.Value).Quantity == 0)
+				return false;
+			return true;
+		}
+
+		private static ObservableCollection<AViewModel> _ViewModels;
+		public static ObservableCollection<AViewModel> ViewModels
+		{
+			get { return _ViewModels; }
+			set { _ViewModels = value; }
+		}
+		private void OnSelectViewCommand(int? obj)
+		{
+			if (obj == null)
+			{
+		
+				Current_ViewModel = GetViewModel("MainViewModel");
+				Drinks = Repo.GetDrinks();
+				return;
+			}
+			Current_ViewModel = this.GetViewModel("ItemViewModel");
+			(Current_ViewModel as ItemViewModel).SelectedDrink = Drinks.First(x=>x.Id == obj);
+		}
+
+
+		#endregion
+		#region Properties
+
 		private IEnumerable<Drink> drinks;
 
 		public IEnumerable<Drink> Drinks
@@ -25,67 +73,47 @@ namespace WpfApplication4.ViewModel.Base
 				OnPropertyChanged("Drinks");
 			}
 		}
-		public string Name { get; set; }
-		public RelayCommand<string> SelectViewCommand { get; set; }
-		public RelayCommand<int> SelectItemCommand { get; set; }
 
-		private IDrinkService serv;
-		public AViewModel(IDrinkService serv):base(serv)
-		{
-			this.serv = serv;
-			//drinks = Service.DrinkService.GetDrinks();
-			Drinks = Repo.GetDrinks();
-			SelectItemCommand = new RelayCommand<int>(OnSelectViewCommandMulti);
-			SelectViewCommand = new RelayCommand<string>(OnSelectViewCommand);
-		}
-		private static ObservableCollection<ViewModelBase> _ViewModels;
-		public static ObservableCollection<ViewModelBase> ViewModels
-		{
-			get { return _ViewModels; }
-			set { _ViewModels = value; }
-		}
 
-		public void AddViewModel(ViewModelBase viewmodel)
-		{
-			if (ViewModels == null)
-				ViewModels = new ObservableCollection<ViewModelBase>();
+		public IDrinkService Repo { get; }
 
-			var currentVNs = (from vms in ViewModels where vms.InternalName == viewmodel.InternalName select vms).FirstOrDefault();
-			if (currentVNs == null)
-				ViewModels.Add(viewmodel);
-		}
-
-		public ViewModelBase GetViewModel(string viewmodel)
-		{
-			return ViewModels.FirstOrDefault(item => item.InternalName == viewmodel);
-		}
-
-		private void OnSelectViewCommand(string obj)
-		{
-			var viewmodel = this.GetViewModel("MainViewModel");
-			Current_ViewModel = viewmodel;
-			//switch (obj)
-			//{
-			//	case "ExitCommand":
-			//		Application.Current.Shutdown();
-			//		break;
-			//	default:
-			//		Current_ViewModel = this.GetViewModel(obj);
-			//		break;
-			//}
-		}
-		private void OnSelectViewCommandMulti(int obj)
-		{
-			Current_ViewModel = this.GetViewModel("ItemViewModel");
-			(Current_ViewModel as ItemViewModel).Drink = Drinks.First(x=>x.Id == obj);
-		}
-
-		private ViewModelBase _Current_ViewModel;
-		public ViewModelBase Current_ViewModel
+		private AViewModel _Current_ViewModel;
+		public AViewModel Current_ViewModel
 		{
 			get { return _Current_ViewModel; }
 			set { _Current_ViewModel = value; OnPropertyChanged("Current_ViewModel"); }
 		}
+
+
+
+		public string Name { get; set; }
+
+
+		#endregion
+		#region Methods
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public void AddViewModel(AViewModel viewmodel)
+		{
+			if (ViewModels == null)
+				ViewModels = new ObservableCollection<AViewModel>();
+			ViewModels.Add(viewmodel);
+		}
+
+		public AViewModel GetViewModel(string viewmodel)
+		{
+			return ViewModels.FirstOrDefault(item => item.Name == viewmodel);
+		}
+		#endregion
+
+
+
 
 
 	}

@@ -14,111 +14,83 @@ namespace WpfApplication4.ViewModel
 	public class ItemViewModel: AViewModel
 	{
 
-		private Drink drink;
 
-		private IDrinkService service;
+
+	
 		public ItemViewModel(IDrinkService service) : base(service)
 		{
-			this.service = service;
 			Sum = 0;
+			SetMoney = new RelayCommand<string>(OnSetMoney);
+			BackCommand = new RelayCommand<object>(OnBackCommand);
+			PayCommand = new RelayCommand<object>(OnPayCommand, CanExecute);
 		}
 
 
-		#region commnds
+		#region Commands
 
 		
 
 		
-		private MainCommand _SetMoney;
-		public MainCommand SetMoney
+		public RelayCommand<string> SetMoney { get; set; }
+		public RelayCommand<object> BackCommand { get; set; }
+		public RelayCommand<object> PayCommand { get; set; }
+
+		private bool CanExecute(object o)
 		{
-			get
-			{
-				return _SetMoney ?? (_SetMoney = new MainCommand(obj =>
-				{
-					Sum += int.Parse(obj.ToString());
-				}, (obj) =>
-				{
-					return true;
-				}));
-			}
+			if (Sum < SelectedDrink.Price * SelectedItem)
+				return false;
+			return true;
 		}
 
-		private MainCommand _PayCommand;
-		public MainCommand PayCommand
+		private void OnSetMoney(string obj)
 		{
-			get
-			{
-				return _PayCommand ?? (_PayCommand = new MainCommand(obj =>
-				{
-					Drink.Quantity -= SelectedItem;
-					Repo.UpdateDrink(Drink);
-					(obj as RelayCommand<string>).Execute(null);	
-				}, (obj) =>
-				{
-					
-   					if (Sum  < Drink.Price*SelectedItem)
-						return false;
-					return true;
-				}));
-			}
+			Sum += int.Parse(obj);
+		}
+
+		private void OnBackCommand(object obj)
+		{
+			Sum = 0;
+			SelectedItem = 1;
+			(obj as RelayCommand<int?>).Execute(null);
+		}
+		private void OnPayCommand(object obj)
+		{
+			SelectedDrink.Quantity -= SelectedItem;
+			Repo.UpdateDrink(SelectedDrink);
+			Sum = 0;
+			SelectedItem = 1;
+			(obj as RelayCommand<int?>).Execute(null);
 		}
 		#endregion
-		#region props
 
-		private int sum =0;
+		#region Properties
 
-		private int _Id;
-		public int Id
+
+		private Drink selectedDrink;
+
+		public Drink SelectedDrink
 		{
 			get
 			{
-				return _Id;
+				return selectedDrink;
 			}
 
 			set
 			{
-				_Id = value;
-				OnPropertyChanged("Id");
+				selectedDrink = value;
+				OnPropertyChanged("SelectedDrink");
 			}
 		}
-
-
-
-		
-
-		public Drink Drink
-		{
-			get
-			{
-				return drink;
-			}
-
-			set
-			{
-				drink = value;
-				OnPropertyChanged("Drink");
-			}
-		}
-		public override event PropertyChangedEventHandler PropertyChanged;
-		protected override void OnPropertyChanged([CallerMemberName]string prop = "")
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
-
-			}
-		}
-		//private event PropertyChangedEventHandler PropertyChanged;
+		private List<int> quantityList;
 		public List<int> QuantityList
 		{
 			get
 			{
 				List<int> res = new List<int>();
-				for (int i = 0; i < drink.Quantity; i++)
+				for (int i = 0; i < SelectedDrink.Quantity; i++)
 				{
 					res.Add(i + 1);
-					
+
 				}
 				return res;
 			}
@@ -130,6 +102,8 @@ namespace WpfApplication4.ViewModel
 			}
 		}
 
+
+		private int sum = 0;
 		public int Sum
 		{
 			get
@@ -157,10 +131,9 @@ namespace WpfApplication4.ViewModel
 			}
 		}
 
-		private List<int> quantityList;
 
-		private int selectedItem=1;
 
+		private int selectedItem = 1;
 		#endregion
 	}
 }

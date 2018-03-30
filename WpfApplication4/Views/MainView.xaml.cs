@@ -14,9 +14,7 @@ using System.Windows.Shapes;
 
 namespace WpfApplication4.Views
 {
-	/// <summary>
-	/// Логика взаимодействия для FirstView.xaml
-	/// </summary>
+
 	public partial class MainView : UserControl
 	{
 		public MainView()

@@ -43,15 +43,8 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    
-    
-    <!--<UserControl.DataContext>
-        <viewModel:MainViewModel></viewModel:MainViewModel>
-    </UserControl.DataContext>-->
-    
-    
     <Grid>
-        <ItemsControl ItemsSource="{Binding Drinks}">
+        <ItemsControl ItemsSource="{Binding Drinks, UpdateSourceTrigger=PropertyChanged}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal"/>
@@ -59,7 +52,8 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button  Margin="20" Height="40" Width="80"  IsEnabled="{Binding Path=Quantity}" Command="{Binding DataContext.SelectItemCommand, ElementName=Base_V}" CommandParameter="{Binding Path=Id}">
+                    <Button  Margin="20" Height="40" Width="80"  IsEnabled="{Binding Path=Quantity, UpdateSourceTrigger=PropertyChanged}" Command="{Binding DataContext.SelectViewCommand, ElementName=Base_V}" CommandParameter="{Binding Path=Id}">
+                 
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="{Binding Path=Name}"></TextBlock>
                             <TextBlock Text="{Binding Path=Price, Converter={StaticResource CostConverter}}"></TextBlock>

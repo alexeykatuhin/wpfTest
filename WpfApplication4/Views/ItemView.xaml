@@ -12,9 +12,9 @@
         
     </UserControl.Resources>
     <StackPanel Orientation="Vertical">
-        <Label HorizontalAlignment="Center" FontSize="20" Content="{Binding Path=Drink.Name}"></Label>
-        <Label HorizontalAlignment="Center" FontSize="18" Content="{Binding Path=Drink.Description}"></Label>
-        <Label HorizontalAlignment="Center" FontSize="16" Content="{Binding Path=Drink.Type}"></Label>
+        <Label HorizontalAlignment="Center" FontSize="20" Content="{Binding Path=SelectedDrink.Name}"></Label>
+        <Label HorizontalAlignment="Center" FontSize="18" Content="{Binding Path=SelectedDrink.Description}"></Label>
+        <Label HorizontalAlignment="Center" FontSize="16" Content="{Binding Path=SelectedDrink.Type}"></Label>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Label Content="Выберите количество напитков"></Label>
             <ComboBox ItemsSource="{Binding Path=QuantityList}" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" ></ComboBox>
@@ -30,7 +30,7 @@
             <Label Content="{Binding Sum, Converter={StaticResource CostConverter}, UpdateSourceTrigger=PropertyChanged}"></Label>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Назад" Margin="10" Width="70" Height="20" Command="{Binding DataContext.SelectViewCommand, ElementName=Base_V}"></Button>
+            <Button Content="Назад" Margin="10" Width="70" Height="20" Command="{Binding BackCommand}" CommandParameter="{Binding DataContext.SelectViewCommand, ElementName=Base_V}"></Button>
             <Button Content="Оплатить" Margin="10" Width="70" Height="20" Command="{Binding PayCommand}" CommandParameter="{Binding DataContext.SelectViewCommand, ElementName=Base_V}"></Button>
         </StackPanel>
     </StackPanel>

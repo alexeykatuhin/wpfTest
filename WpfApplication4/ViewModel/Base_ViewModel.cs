@@ -16,8 +16,8 @@ namespace WpfApplication4.ViewModel
 
 		public Base_ViewModel(IDrinkService serv):base(serv)
 		{
-			this.AddViewModel(new MainViewModel(serv) { DisplayName = "Main", InternalName = "MainViewModel" });
-			this.AddViewModel(new ItemViewModel(serv) { DisplayName = "Item", InternalName = "ItemViewModel" });
+			this.AddViewModel(new MainViewModel(serv) {  Name = "MainViewModel" });
+			this.AddViewModel(new ItemViewModel(serv) {  Name = "ItemViewModel" });
 
 			this.Current_ViewModel = this.GetViewModel("MainViewModel");
 		}

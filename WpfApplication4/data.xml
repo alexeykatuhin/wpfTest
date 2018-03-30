@@ -46,7 +46,7 @@
     <description>Fresh Milk</description>
     <price>20</price>
     <type>NonAlcohol</type>
-    <quantity>8</quantity>
+    <quantity>1</quantity>
   </drink>
   <drink>
     <id>7</id>
@@ -62,7 +62,7 @@
     <description>Energetic Burn</description>
     <price>222</price>
     <type>NonAlcohol</type>
-    <quantity>2</quantity>
+    <quantity>1</quantity>
   </drink>
   <drink>
     <id>9</id>
